@@ -1,9 +1,9 @@
 .idea/
 tmp/
 p4src/build
-app/target
-app/src/main/resources/p4info.txt
-app/src/main/resources/bmv2.json
+# app/target
+# app/src/main/resources/p4info.txt
+# app/src/main/resources/bmv2.json
 ptf/stratum_bmv2.log
 ptf/p4rt_write.log
 ptf/ptf.log
