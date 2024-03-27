@@ -519,7 +519,11 @@ If you are running the VM on your laptop, open up a browser (e.g. Firefox) to
 
 To toggle showing hosts on the topology view, press `H` on your keyboard.
 
+<<<<<<< HEAD
 ## Congratulations!
+=======
+![ECMP Test](img/routing-ecmp.png)
+>>>>>>> 05ea02e4c6ae32ecfd0558717cbe8c751c1d52c5
 
 You have completed the fourth exercise!
 

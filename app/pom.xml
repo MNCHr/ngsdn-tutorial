@@ -34,6 +34,11 @@
     <url>http://www.onosproject.org</url>
 
     <properties>
+<<<<<<< HEAD
+=======
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <onos.version>2.2.2</onos.version>
+>>>>>>> 05ea02e4c6ae32ecfd0558717cbe8c751c1d52c5
         <onos.app.name>org.onosproject.ngsdn-tutorial</onos.app.name>
         <onos.app.title>NG-SDN Tutorial App</onos.app.title>
         <onos.app.origin>https://www.onosproject.org</onos.app.origin>
@@ -110,6 +115,10 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
+<<<<<<< HEAD
+=======
+            <version>2.9.10.3</version>
+>>>>>>> 05ea02e4c6ae32ecfd0558717cbe8c751c1d52c5
             <scope>provided</scope>
         </dependency>
 

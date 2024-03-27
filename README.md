@@ -36,6 +36,18 @@ version.
 
 If you're interested in the advanced version, keep reading.
 
+## Basic vs. advanced version
+
+This tutorial comes in two versions: basic (this branch), and advanced
+(`advanced` branch).
+
+The advanced version assumes intermediate knowledge of the P4 language, and it
+contains more exercises, e.g., showing how to use existing ONOS applications and
+P4 programs such as Trellis and fabric.p4. Check the `advanced` branch of this
+repo if you're interested in the advanced version.
+
+If you're interested in the basic version, keep reading.
+
 ## Slides
 
 Tutorial slides are available online:
@@ -95,7 +107,7 @@ All exercises can be executed by installing the following dependencies:
 
 **Note for Windows users**: all scripts have been tested on macOS and Ubuntu.
 Although we think they should work on Windows, we have not tested it. For this
-reason, we advise Windows users to prefer Option 1.
+reason, we advise Windows users to prefer Option 1 (downloading a VM).
 
 ## Get this repo or pull latest changes
 

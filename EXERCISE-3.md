@@ -85,6 +85,7 @@ Make sure you see the following list of apps displayed:
 * 181 org.onosproject.drivers.bmv2          2.2.2    BMv2 Drivers
 ```
 
+<<<<<<< HEAD
 There are definitely more apps than defined in `$ONOS_APPS`. That's
 because each app in ONOS can define other apps as dependencies. When loading an
 app, ONOS automatically resolves dependencies and loads all other required apps.
@@ -99,6 +100,11 @@ CLI command to deactivate the link discovery service.
 ```
 onos> app deactivate lldpprovider
 ```
+=======
+This is definitely more apps than what defined in `$ONOS_APPS`. That's
+because each app in ONOS can define other apps as dependencies. When loading an
+app, ONOS automatically resolves dependencies and loads all other required apps.
+>>>>>>> 05ea02e4c6ae32ecfd0558717cbe8c751c1d52c5
 
 To exit the ONOS CLI, use `Ctrl-D`. This will stop the CLI process
 but will not affect ONOS itself.
@@ -245,6 +251,37 @@ deviceId=device:spine1
 
 ```
 
+<<<<<<< HEAD
+=======
+#### Links
+
+Verify that all links have been discovered. You should see 8 links in total:
+
+```
+onos> links
+src=device:leaf1/1, dst=device:spine1/1, type=DIRECT, state=ACTIVE, expected=false
+src=device:leaf1/2, dst=device:spine2/1, type=DIRECT, state=ACTIVE, expected=false
+src=device:leaf2/1, dst=device:spine1/2, type=DIRECT, state=ACTIVE, expected=false
+src=device:leaf2/2, dst=device:spine2/2, type=DIRECT, state=ACTIVE, expected=false
+src=device:spine1/1, dst=device:leaf1/1, type=DIRECT, state=ACTIVE, expected=false
+src=device:spine1/2, dst=device:leaf2/1, type=DIRECT, state=ACTIVE, expected=false
+src=device:spine2/1, dst=device:leaf1/2, type=DIRECT, state=ACTIVE, expected=false
+src=device:spine2/2, dst=device:leaf2/2, type=DIRECT, state=ACTIVE, expected=false
+```
+
+**If you don't see any link**, check the ONOS log for any error with
+packet-in/out handling. In case of errors, it's possible that you have not
+modified `InterpreterImpl.java` correctly. In this case, kill the ONOS
+container (`make reset`) and go back to exercise step 1.
+
+**Note:** in theory, there should be no need to kill and restart ONOS. However,
+while ONOS supports reloading apps with a modified one, the version of ONOS used
+in this tutorial (2.2.2, the most recent Long Term Support release at the time
+of writing) does not support reloading *pipeconf behavior classes*, as the old
+classes will still be used. For this reason, to reload a modified version of
+`InterpreterImpl.java`, you need to kill ONOS first.
+
+>>>>>>> 05ea02e4c6ae32ecfd0558717cbe8c751c1d52c5
 #### Flow rules and groups
 
 Check the ONOS flow rules. You should see three flow rules for each device. For
@@ -256,11 +293,59 @@ deviceId=device:leaf1, flowRuleCount=3
     ADDED, bytes=0, packets=0, table=IngressPipeImpl.acl_table, priority=40000, selector=[ETH_TYPE:arp], treatment=[immediate=[IngressPipeImpl.clone_to_cpu()]]
     ADDED, bytes=0, packets=0, table=IngressPipeImpl.acl_table, priority=40000, selector=[ETH_TYPE:ipv6, IP_PROTO:58, ICMPV6_TYPE:136], treatment=[immediate=[IngressPipeImpl.clone_to_cpu()]]
     ADDED, bytes=0, packets=0, table=IngressPipeImpl.acl_table, priority=40000, selector=[ETH_TYPE:ipv6, IP_PROTO:58, ICMPV6_TYPE:135], treatment=[immediate=[IngressPipeImpl.clone_to_cpu()]]
+<<<<<<< HEAD
 
 ```
 
 This list include flow rules installed by the ONOS built-in services such as
 `hostprovider`. We'll talk more about these services in the next exercise.
+=======
+    ADDED, bytes=3596, packets=29, table=IngressPipeImpl.acl_table, priority=40000, selector=[ETH_TYPE:bddp], treatment=[immediate=[IngressPipeImpl.clone_to_cpu()]]
+    ADDED, bytes=0, packets=0, table=IngressPipeImpl.l2_exact_table, priority=10, selector=[hdr.ethernet.dst_addr=0xbb00000001], treatment=[immediate=[IngressPipeImpl.set_egress_port(port_num=0x1)]]
+    ADDED, bytes=0, packets=0, table=IngressPipeImpl.l2_exact_table, priority=10, selector=[hdr.ethernet.dst_addr=0xbb00000002], treatment=[immediate=[IngressPipeImpl.set_egress_port(port_num=0x2)]]
+    ADDED, bytes=0, packets=0, table=IngressPipeImpl.l2_ternary_table, priority=10, selector=[hdr.ethernet.dst_addr=0x333300000000&&&0xffff00000000], treatment=[immediate=[IngressPipeImpl.set_multicast_group(gid=0xff)]]
+    ADDED, bytes=3596, packets=29, table=IngressPipeImpl.l2_ternary_table, priority=10, selector=[hdr.ethernet.dst_addr=0xffffffffffff&&&0xffffffffffff], treatment=[immediate=[IngressPipeImpl.set_multicast_group(gid=0xff)]]
+    ADDED, bytes=0, packets=0, table=IngressPipeImpl.my_station_table, priority=10, selector=[hdr.ethernet.dst_addr=0xaa00000001], treatment=[immediate=[NoAction()]]
+    ADDED, bytes=0, packets=0, table=IngressPipeImpl.routing_v6_table, priority=10, selector=[hdr.ipv6.dst_addr=0x20010002000400000000000000000000/64], treatment=[immediate=[GROUP:0xec3b0000]]
+    ADDED, bytes=0, packets=0, table=IngressPipeImpl.routing_v6_table, priority=10, selector=[hdr.ipv6.dst_addr=0x20010002000300000000000000000000/64], treatment=[immediate=[GROUP:0xec3b0000]]
+
+```
+
+This list include flow rules installed by the ONOS built-in apps as well as our
+custom app. To check which flow rules come from the built-in apps, you can
+`grep` the output of the `flows` command using the app ID
+`appId=org.onosproject.core`:
+
+```
+onos> flows any device:leaf1 | grep appId=org.onosproject.core
+    id=100001e5fba59, state=ADDED, bytes=0, packets=0, duration=355, liveType=UNKNOWN, priority=40000, tableId=IngressPipeImpl.acl_table, appId=org.onosproject.core, selector=[ETH_TYPE:arp], treatment=DefaultTrafficTreatment{immediate=[IngressPipeImpl.clone_to_cpu()], deferred=[], transition=None, meter=[], cleared=false, StatTrigger=null, metadata=null}
+    id=10000217b5edd, state=ADDED, bytes=28644, packets=231, duration=355, liveType=UNKNOWN, priority=40000, tableId=IngressPipeImpl.acl_table, appId=org.onosproject.core, selector=[ETH_TYPE:lldp], treatment=DefaultTrafficTreatment{immediate=[IngressPipeImpl.clone_to_cpu()], deferred=[], transition=None, meter=[], cleared=false, StatTrigger=null, metadata=null}
+    id=1000039959d4d, state=ADDED, bytes=0, packets=0, duration=355, liveType=UNKNOWN, priority=40000, tableId=IngressPipeImpl.acl_table, appId=org.onosproject.core, selector=[ETH_TYPE:ipv6, IP_PROTO:58, ICMPV6_TYPE:136], treatment=DefaultTrafficTreatment{immediate=[IngressPipeImpl.clone_to_cpu()], deferred=[], transition=None, meter=[], cleared=false, StatTrigger=null, metadata=null}
+    id=1000078c06d68, state=ADDED, bytes=0, packets=0, duration=355, liveType=UNKNOWN, priority=40000, tableId=IngressPipeImpl.acl_table, appId=org.onosproject.core, selector=[ETH_TYPE:ipv6, IP_PROTO:58, ICMPV6_TYPE:135], treatment=DefaultTrafficTreatment{immediate=[IngressPipeImpl.clone_to_cpu()], deferred=[], transition=None, meter=[], cleared=false, StatTrigger=null, metadata=null}
+    id=10000d1887c0b, state=ADDED, bytes=0, packets=0, duration=356, liveType=UNKNOWN, priority=40000, tableId=IngressPipeImpl.acl_table, appId=org.onosproject.core, selector=[ETH_TYPE:bddp], treatment=DefaultTrafficTreatment{immediate=[IngressPipeImpl.clone_to_cpu()], deferred=[], transition=None, meter=[], cleared=false, StatTrigger=null, metadata=null}
+```
+
+These rules are the result of the translation of flow objectives generated
+automatically for each device by the `hostprovider` and `lldpprovider` apps.
+
+The `hostprovider` app provides host discovery capabilities by sniffing ARP
+(`selector=[ETH_TYPE:arp]`) and NDP packets (`selector=[ETH_TYPE:ipv6,
+IP_PROTO:58, ICMPV6_TYPE:...]`), which are cloned to the controller
+(`treatment=[immediate=[IngressPipeImpl.clone_to_cpu()]]`). Similarly,
+`lldpprovider` generates flow objectives to sniff LLDP and BBDP packets
+(`selector=[ETH_TYPE:lldp]` and `selector=[ETH_TYPE:bbdp]`) periodically emitted
+on all devices' ports as P4Runtime packet-outs, allowing automatic link
+discovery.
+
+Flow objectives are translated to flow rules and groups by the pipeconf, which
+provides a `Pipeliner` behavior implementation
+([PipelinerImpl.java][PipelinerImpl.java]). Moreover, these flow rules specify a
+match key by using ONOS standard/known header fields (or "Criteria" using ONOS
+terminology), such as `ETH_TYPE`, `ICMPV6_TYPE`, etc.  These types are mapped to
+P4Info-specific match fields by the same pipeline interpreter modified before
+[InterpreterImpl.java][InterpreterImpl.java] (look for method
+`mapCriterionType`)
+>>>>>>> 05ea02e4c6ae32ecfd0558717cbe8c751c1d52c5
 
 To show all groups installed so far, you can use the `groups` command. For
 example to show groups on `leaf1`:
@@ -312,8 +397,39 @@ including details of the P4 tables.
 Clicking the table row brings up the details panel, showing details of the match
 fields, actions, action parameter bit widths, etc.
 
+<<<<<<< HEAD
 
 ## Congratulations!
+=======
+> Only the hosts that have been pinged successfully at this point in mininet will
+> be visible.
+
+Link stats are derived by ONOS by periodically obtaining the port counters for
+each device. ONOS internally uses gNMI to read port information, including
+counters.
+
+> All of the devices, ports (including stats), links, hosts, flows, and groups can be
+> displayed through the various views in the web UI.
+
+#### 7a. View Pipeconf data in the web UI
+
+In the ONOS topology view click on one of the Stratum switches (e.g `device:leaf1`)
+and the Device Details panel appears. In that panel click on the Pipeconf icon
+(the last one), to open the Pipeconf view for that device.
+
+![device-leaf1-details-panel](img/device-leaf1-details-panel.png)
+
+In the top panel, the general Pipeconf data for that device is given. In the
+lower panel, the same tables found in the P4 program are listed, with the number
+of table entries and packets matched periodically updated.
+
+![onos-gui-pipeconf-leaf1](img/onos-gui-pipeconf-leaf1.png)
+
+Clicking the table row brings up the details panel, showing details of the match
+fields, actions, action parameter bit widths, etc.
+
+### Congratulations!
+>>>>>>> 05ea02e4c6ae32ecfd0558717cbe8c751c1d52c5
 
 You have completed the third exercise! If you're feeling ambitious,
 you can do the extra credit steps below.

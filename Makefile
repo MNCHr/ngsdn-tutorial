@@ -1,3 +1,24 @@
+<<<<<<< HEAD
+=======
+ONOS_IMG := onosproject/onos:2.2.2
+P4RT_SH_IMG := p4lang/p4runtime-sh:latest
+P4C_IMG := opennetworking/p4c:stable
+MN_STRATUM_IMG := opennetworking/mn-stratum:latest
+MAVEN_IMG := maven:3.6.1-jdk-11-slim
+PTF_IMG := onosproject/fabric-p4test
+GNMI_CLI_IMG := bocon/gnmi-cli:latest
+YANG_IMG := bocon/yang-tools:latest
+
+ONOS_SHA := sha256:438815ab20300cd7a31702b7dea635152c4c4b5b2fed9b14970bd2939a139d2a
+P4RT_SH_SHA := sha256:6ae50afb5bde620acb9473ce6cd7b990ff6cc63fe4113cf5584c8e38fe42176c
+P4C_SHA := sha256:8f9d27a6edf446c3801db621359fec5de993ebdebc6844d8b1292e369be5dfea
+MN_STRATUM_SHA := sha256:ae7c59885509ece8062e196e6a8fb6aa06386ba25df646ed27c765d92d131692
+MAVEN_SHA := sha256:ca67b12d638fe1b8492fa4633200b83b118f2db915c1f75baf3b0d2ef32d7263
+PTF_SHA := sha256:227207ff9d15f5e45c44c7904e815efdb3cea0b4e5644ac0878d41dd54aca78d
+GNMI_CLI_SHA := sha256:6f1590c35e71c07406539d0e1e288e87e1e520ef58de25293441c3b9c81dffc0
+YANG_SHA := sha256:feb2dc322af113fc52f17b5735454abfbe017972c867e522ba53ea44e8386fd2
+
+>>>>>>> 05ea02e4c6ae32ecfd0558717cbe8c751c1d52c5
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 curr_dir := $(patsubst %/,%,$(dir $(mkfile_path)))
 
@@ -47,8 +68,12 @@ start-gtp: NGSDN_TOPO_PY := topo-gtp.py
 start-gtp: _start
 
 stop:
+<<<<<<< HEAD
 	$(info *** Stopping ONOS and Mininet...)
 	@NGSDN_TOPO_PY=foo docker-compose down -t0
+=======
+	docker-compose down
+>>>>>>> 05ea02e4c6ae32ecfd0558717cbe8c751c1d52c5
 
 restart: reset start
 
