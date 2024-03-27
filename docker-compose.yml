@@ -31,6 +31,8 @@ services:
     volumes:
       - ./tmp/onos:/root/onos/apache-karaf-4.2.8/data/tmp
     environment:
-      - ONOS_APPS=gui2,drivers.bmv2,lldpprovider,hostprovider
+      # - ONOS_APPS=gui2,drivers.bmv2,lldpprovider,hostprovider
+      - ONOS_APPS=gui2,drivers.bmv2,lldpprovider,hostprovider,route-service,mcast,portloadbalancer,segmentrouting
+        #* 시작 시에 설정되는 환경 변수. tutorial 에 trellis 의 온전한 동작을 위해선 이것들이 필요하다고 함
     links:
       - mininet
